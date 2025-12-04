@@ -82,7 +82,7 @@ client.on("chatMember", async (memberEvent) => {
   const name = newMember.user.username ? `@${newMember.user.username}` : `[${newMember.user.firstName} ${newMember.user.lastName}](tg://user?id=${newMember.user.id})`
   client.sendMessage({
     chatId: memberEvent.chat.id,
-    text: `Bienvenide, @${name}!
+    text: `Bienvenide, ${name}!
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
