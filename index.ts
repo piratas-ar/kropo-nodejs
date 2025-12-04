@@ -105,7 +105,8 @@ client.on("message", async (eventMessage) => {
         text: getMessage(response.message),
         replyParameters: {
           message_id: eventMessage.id
-        }
+        },
+        parseMode: "Markdown"
       })
     }
   }
