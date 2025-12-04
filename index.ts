@@ -37,11 +37,11 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: "copiar no es robar!"
   },
   {
-    regexp: /\Wbot\W/i,
+    regexp: /(^|\W)bot(\W|$)/i,
     message: ['a quién le habla?', 'hay unx bot por acá? :O', '¬¬', 'qué estás haciendo, dave?']
   },
   {
-    regexp: /\Wtorrent\W/i,
+    regexp: /(^|\W)torrent(\W|$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
   }
 ]
