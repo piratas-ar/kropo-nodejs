@@ -87,8 +87,7 @@ client.on("chatMember", async (memberEvent) => {
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
-Te invitamos a leer nuestros códigos para compartir:
-https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html
+Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
 Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`,
   })
