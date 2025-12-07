@@ -25,23 +25,23 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: "eso en linux/GNU no pasa xD"
   },
   {
-    regexp: /\bgat(it)?[oiaex]s?\b/i,
+    regexp: /( |^)gat(it)?[oiaex]s?( |$)/i,
     message: "LXS GATITXS SON LO MEJOR"
   },
   {
-    regexp: /\b(yuta|polic[ií]a|rati)\b/i,
-    message: ["muerte a la #{$1}", "never yuta"]
+    regexp: /( |^)(yuta|polic[ií]a|rati)( |$)/i,
+    message: ["muerte a la $1", "never yuta"]
   },
   {
-    regexp: /copi(a|ar?)/i,
+    regexp: /( |^)copi(a|ar?)( |$)/i,
     message: "copiar no es robar!"
   },
   {
-    regexp: /( |^)bot( |$)/,
+    regexp: /( |^)bot( |$)/i,
     message: ['a quién le habla?', 'hay unx bot por acá? :O', '¬¬', 'qué estás haciendo, dave?']
   },
   {
-    regexp: /(^|\W)torrent(\W|$)/i,
+    regexp: /(^| )torrent( |$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
   }
 ]
@@ -99,10 +99,15 @@ client.on("message", async (eventMessage) => {
   }
 
   for (let response of automaticResponses) {
-    if (response.regexp.test(eventMessage.content)) {
+    const res = response.regexp.exec(eventMessage.content)
+    if (res) {
+      let message = getMessage(response.message);
+      for (let i = 1; i < res.length; i++) {
+        message = message.replace('$'+i, res[i])
+      }
       client.sendMessage({
         chatId: eventMessage.chat.id,
-        text: getMessage(response.message),
+        text: message,
         replyParameters: {
           message_id: eventMessage.id
         }
