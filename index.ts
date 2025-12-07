@@ -30,7 +30,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /( |^)(yuta|polic[ií]a|rati)( |$)/i,
-    message: ["muerte a la $1", "never yuta"]
+    message: ["muerte a la $2", "never yuta"]
   },
   {
     regexp: /( |^)copi(a|ar?)( |$)/i,
