@@ -37,7 +37,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: "copiar no es robar!"
   },
   {
-    regexp: /(^|\W)bot(\W|$)/i,
+    regexp: /( |^)bot( |$)/,
     message: ['a quién le habla?', 'hay unx bot por acá? :O', '¬¬', 'qué estás haciendo, dave?']
   },
   {
