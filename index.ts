@@ -25,7 +25,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: "eso en linux/GNU no pasa xD"
   },
   {
-    regexp: /gat(it)?[oiaex]s?/i,
+    regexp: /\bgat(it)?[oiaex]s?\b/i,
     message: "LXS GATITXS SON LO MEJOR"
   },
   {
