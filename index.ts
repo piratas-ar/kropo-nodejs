@@ -43,7 +43,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   {
     regexp: /(^| )Software Libre( |$)/i,
     message: ["Ningún Software es libre hasta que todo Software sea libre"]
-  }
+  },
     {
     regexp: /(^| )torrent( |$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
