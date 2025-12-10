@@ -44,6 +44,22 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     regexp: /(^| )Software Libre( |$)/i,
     message: ["Ningún Software es libre hasta que todo Software sea libre"]
   },
+  {
+    regexp: /(^| )Esquizofr[eé]nia( |$)/i,
+    message: ["Dios bendiga a les esquizofreniques"]
+  },
+  {
+    regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
+    message: ["Yo estaba acostumbrado a un poco de porro pero instagram es fentanilo"]
+  },
+  {
+    regexp: /(^| )([Aa]rgentin[oae]|[Ll]at[ií]n[oa]|[Ss]udam[ée]rica|[Ss]udam[ée]rican[aeo])( |$)/i,
+    message: ["Cuanto menos yanqui y europeo mejor"]
+  },
+  {
+    regexp: /(^| )[Qq]uiero ser pir[áa]t[aeo]( |$)/i,
+    message: ["En el fondo, ya lo sos. <3"]
+  },
     {
     regexp: /(^| )torrent( |$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
