@@ -13,7 +13,7 @@ const client = new TelegramClient(BOT_TOKEN);
 
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
-    regexp: /(?<!no )ha(y|bria|bría) que/i,
+    regexp: /(?<!no )ha(y|bria|bría) que(?!.+\?)/i,
     message: "che que buena idea, querés organizarla?"
   },
   {
