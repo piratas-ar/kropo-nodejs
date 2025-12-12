@@ -1,7 +1,7 @@
 #!/opt/bots/kropo/.nvm/versions/node/v24.11.1/bin/ts-node
 
 // ECMAscript/TypeScript
-import { TelegramClient } from "telegramsjs";
+import { ChatMemberUpdated, ClientUser, Message, TelegramClient } from "telegramsjs";
 
 const BOT_TOKEN = process.env.KROPO_TOKEN;
 
@@ -9,7 +9,7 @@ if (!BOT_TOKEN) {
   throw new Error("You need to config KROPO_TOKEN with twitter credentials")
 }
 
-const client = new TelegramClient(BOT_TOKEN);
+let client: TelegramClient;
 
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
@@ -57,12 +57,12 @@ const getMessage: (msg: string | string[]) => string = (msg) => {
     const rnd = Math.floor(Math.random() * msg.length)
     return msg[rnd]
   } else {
-    console.error("something is off on the message dict", msg)
+    console.error("something is off on the message dictonary", msg)
     return "?"
   }
 }
 
-client.on("ready", async ({ user }) => {
+const tgInit = async ({ user }: { user: ClientUser | null }) => {
   if (user) {
     await user.setCommands([
       {
@@ -74,9 +74,9 @@ client.on("ready", async ({ user }) => {
   } else {
     console.log(`Bot was not available`);
   }
-});
+}
 
-client.on("chatMember", async (memberEvent) => {
+const newMember = async (memberEvent: ChatMemberUpdated) => {
   if (memberEvent.newMember.status !== "member") return;
   const newMember= memberEvent.newMember
   if (!newMember || !newMember.user) {
@@ -95,9 +95,9 @@ Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopir
 
 Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`,
   })
-});
+}
 
-client.on("message", async (eventMessage) => {
+const answerMessage = async (eventMessage: Message) => {
   if (!eventMessage.content || !eventMessage.chat) {
     return;
   }
@@ -118,10 +118,30 @@ client.on("message", async (eventMessage) => {
       })
     }
   }
-})
+}
+const start = () => {
+  try {
+    client = new TelegramClient(BOT_TOKEN);
 
-client.getUpdates({
-  allowedUpdates: ["chat_member"]
-})
+    client.on("ready", tgInit);
 
-client.login()
+    client.on("chatMember", newMember);
+
+    client.on("message", answerMessage)
+
+    client.on("error", (err) => {
+      console.error("Telegram client error:", err);
+    })
+
+    client.getUpdates({
+      allowedUpdates: ["chat_member"]
+    })
+
+    client.login()
+  } catch (e) {
+    console.error(e, 'restarting in 60 seconds')
+    setTimeout(start, 60 * 1000)
+  }
+}
+
+start()
