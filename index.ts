@@ -14,7 +14,7 @@ let client: TelegramClient;
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
     regexp: /(?<!no )ha(y|bria|bría) que(?!.+\?)/i,
-    message: "che que buena idea, querés organizarla?"
+    message: "che que buena idea, ¿querés organizarla?"
   },
   {
     regexp: /:[c(]/i,
@@ -34,15 +34,31 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /( |^)copi(a|ar?)( |$)/i,
-    message: "copiar no es robar!"
+    message: "¡copiar no es robar!"
   },
   {
     regexp: /( |^)bot( |$)/i,
-    message: ['a quién le habla?', 'hay unx bot por acá? :O', '¬¬', 'qué estás haciendo, dave?']
+    message: ['¿a quién le habla?', '¿hay unx bot por acá? :O', '¬¬', '¿qué estás haciendo, dave?']
   },
   {
     regexp: /(^| )Software Libre( |$)/i,
-    message: ["Ningún Software es libre hasta que todo Software sea libre"]
+    message: ["¡Ningún Software es libre hasta que todo Software sea libre!"]
+  },
+  {
+    regexp: /(^| )Esquizofr[eé]nia( |$)/i,
+    message: ["¡Dios bendiga a les esquizofreniques!"]
+  },
+  {
+    regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
+    message: ["Yo estaba acostumbrado a un poco de porro pero instagram es fentanilo..."]
+  },
+  {
+    regexp: /(^| )([Aa]rgentin[oae]|[Ll]at[ií]n[oa]|[Ss]udam[ée]rica|[Ss]udam[ée]rican[aeo])( |$)/i,
+    message: ["¡Cuanto menos yanqui y europeo, mejor!"]
+  },
+  {
+    regexp: /(^| )[Qq]uiero ser pir[áa]t[aeo]( |$)/i,
+    message: ["En el fondo, ya lo sos. <3"]
   },
     {
     regexp: /(^| )torrent( |$)/i,
