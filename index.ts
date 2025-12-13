@@ -6,7 +6,7 @@ import { ChatMemberUpdated, ClientUser, Message, TelegramClient } from "telegram
 const BOT_TOKEN = process.env.KROPO_TOKEN;
 
 if (!BOT_TOKEN) {
-  throw new Error("You need to config KROPO_TOKEN with twitter credentials")
+  throw new Error("You need to config KROPO_TOKEN with telegram credentials")
 }
 
 let client: TelegramClient;
