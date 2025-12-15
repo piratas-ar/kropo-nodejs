@@ -46,7 +46,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
-    message: ["Yo estaba acostumbrado a un poco de porro pero instagram es fentanilo..."]
+    message: ["Yo estaba acostumbrade a un poco de porro cada tanto pero instagram es fentanilo..."]
   },
   {
     regexp: /(^| )([Aa]rgentin[oae]|[Ll]at[ií]n[oa]|[Ss]udam[ée]rica|[Ss]udam[ée]rican[aeo])( |$)/i,
