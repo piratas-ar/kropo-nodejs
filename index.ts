@@ -45,10 +45,6 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: ["¡Ningún Software es libre hasta que todo Software sea libre!"]
   },
   {
-    regexp: /(^| )Esquizofr[eé]nia( |$)/i,
-    message: ["¡Dios bendiga a les esquizofreniques!"]
-  },
-  {
     regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
     message: ["Yo estaba acostumbrado a un poco de porro pero instagram es fentanilo..."]
   },
