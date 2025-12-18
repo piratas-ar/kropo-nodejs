@@ -56,6 +56,10 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     regexp: /(^| )[Qq]uiero ser pir[áa]t[aeo]( |$)/i,
     message: ["En el fondo, ya lo sos. <3"]
   },
+  {
+    regexp: /(^| )Tengo que trabajar( |$)/i,
+    message: ["¡Quiero estar haciendo cosas lindas todo el dia! ¿Quién mierda inventó trabajar?"]
+  },
     {
     regexp: /(^| )torrent( |$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
