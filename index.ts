@@ -134,7 +134,7 @@ const answerMessage = async (eventMessage: Message) => {
         client.sendMessage({
           chatId: eventMessage.chat.id,
           text: message,
-          parseMode: "MarkdownV2",
+          parseMode: "Markdown",
           replyParameters: {
             message_id: eventMessage.id
           }
