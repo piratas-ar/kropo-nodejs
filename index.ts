@@ -100,17 +100,22 @@ const newMember = async (memberEvent: ChatMemberUpdated) => {
     return;
   }
   const name = newMember.user.username ? `@${newMember.user.username}` : `[${newMember.user.firstName} ${newMember.user.lastName || ''}](tg://user?id=${newMember.user.id})`
-  client.sendMessage({
-    chatId: memberEvent.chat.id,
-    parseMode: "Markdown",
-    text: `Bienvenide, ${name}!
+    const text = `Bienvenide, ${name}!
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
 Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
-Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`,
-  })
+Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`
+  try {
+    client.sendMessage({
+      chatId: memberEvent.chat.id,
+      parseMode: "Markdown",
+      text
+    })
+  } catch (e) {
+    console.error('error intentando saludar a un usuario', e, text, newMember.user)
+  }
 }
 
 const answerMessage = async (eventMessage: Message) => {
