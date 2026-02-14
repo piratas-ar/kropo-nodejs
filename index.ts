@@ -101,12 +101,12 @@ const newMember = async (memberEvent: ChatMemberUpdated) => {
   }
   const name = newMember.user.username ? `@${newMember.user.username}` : `[${newMember.user.firstName} ${newMember.user.lastName || ''}](tg://user?id=${newMember.user.id})`
   const text = `Bienvenide, ${name}\\!
-Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
+Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata\\.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
 Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
-Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`
+Recordamos a todes que este grupo es público, así como su lista de participantes\\. Cuidemos entre todes qué datos y metadatos compartimos\\.`
   try {
     client.sendMessage({
       chatId: memberEvent.chat.id,
