@@ -133,8 +133,8 @@ const answerMessage = async (eventMessage: Message) => {
       try {
         client.sendMessage({
           chatId: eventMessage.chat.id,
-          text: message,
-          parseMode: "Markdown",
+          text: message.replace(/!/g,'\\!'),
+          parseMode: "MarkdownV2",
           replyParameters: {
             message_id: eventMessage.id
           }
