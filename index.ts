@@ -110,7 +110,7 @@ Recordamos a todes que este grupo es público, así como su lista de participant
   try {
     client.sendMessage({
       chatId: memberEvent.chat.id,
-      parseMode: "Markdown",
+      parseMode: "MarkdownV2",
       text
     })
   } catch (e) {
