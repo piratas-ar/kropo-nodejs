@@ -119,7 +119,7 @@ Recordamos a todes que este grupo es público, así como su lista de participant
 }
 
 const answerMessage = async (eventMessage: Message) => {
-  if (!eventMessage.content || !eventMessage.chat) {
+  if (!eventMessage.content || !eventMessage.chat || eventMessage.author?.username === '@kropotkine_bot') {
     return;
   }
 
