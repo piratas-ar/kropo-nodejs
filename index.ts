@@ -130,13 +130,18 @@ const answerMessage = async (eventMessage: Message) => {
       for (let i = 1; i < res.length; i++) {
         message = message.replace('$'+i, res[i])
       }
-      client.sendMessage({
-        chatId: eventMessage.chat.id,
-        text: message,
-        replyParameters: {
-          message_id: eventMessage.id
-        }
-      })
+      try {
+        client.sendMessage({
+          chatId: eventMessage.chat.id,
+          text: message,
+          parseMode: "MarkdownV2",
+          replyParameters: {
+            message_id: eventMessage.id
+          }
+        })
+      } catch (e) {
+        console.error('error intentando mandar un mensaje automático', e, message, eventMessage.chat)
+      }
     }
   }
 }
