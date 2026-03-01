@@ -11,6 +11,14 @@ if (!BOT_TOKEN) {
 
 let client: TelegramClient;
 
+const escape = (txt: string) => txt
+    .replace(".", "\\.")
+    .replace("!", "\\!")
+    .replace("_", "\\_")
+    .replace("*", "\\*")
+    .replace("[", "\\[")
+    .replace("`", "\\`");
+
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
     regexp: /(?<!no )ha(y|bria|bría) que(?!.+\?)/i,
@@ -18,7 +26,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /:[c(]/i,
-    message: [ "te mando un abrazo :\\(", "te mando un abrazo :c" ]
+    message: [ "te mando un abrazo :(", "te mando un abrazo :c" ]
   },
   {
     regexp: /windows/i,
@@ -100,18 +108,18 @@ const newMember = async (memberEvent: ChatMemberUpdated) => {
     return;
   }
   const name = newMember.user.username ? `@${newMember.user.username}` : `[${newMember.user.firstName} ${newMember.user.lastName || ''}](tg://user?id=${newMember.user.id})`
-  const text = `Bienvenide, ${name}\\!
-Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata\\.
+  const text = `Bienvenide, ${name}!
+Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
 Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
-Recordamos a todes que este grupo es público, así como su lista de participantes\\. Cuidemos entre todes qué datos y metadatos compartimos\\.`
+Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`
   try {
     client.sendMessage({
       chatId: memberEvent.chat.id,
       parseMode: "MarkdownV2",
-      text
+      text: escape(text)
     })
   } catch (e) {
     console.error('error intentando saludar a un usuario', e, text, newMember.user)
@@ -133,7 +141,7 @@ const answerMessage = async (eventMessage: Message) => {
       try {
         client.sendMessage({
           chatId: eventMessage.chat.id,
-          text: message.replace(/!/g,'\\!').replace(/\./, '\\.'), // char escaping
+          text: escape(message), // char escaping
           parseMode: "HTML",
           replyParameters: {
             message_id: eventMessage.id
