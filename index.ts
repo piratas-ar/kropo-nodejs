@@ -134,7 +134,7 @@ const answerMessage = async (eventMessage: Message) => {
         client.sendMessage({
           chatId: eventMessage.chat.id,
           text: message.replace(/!/g,'\\!').replace(/\./, '\\.'), // char escaping
-          parseMode: "MarkdownV2",
+          parseMode: "HTML",
           replyParameters: {
             message_id: eventMessage.id
           }
