@@ -18,7 +18,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /:[c(]/i,
-    message: [ "te mando un abrazo :(", "te mando un abrazo :c" ]
+    message: [ "te mando un abrazo :\\(", "te mando un abrazo :c" ]
   },
   {
     regexp: /windows/i,
