@@ -17,6 +17,7 @@ const escape = (txt: string) => txt
     .replace("_", "\\_")
     .replace("*", "\\*")
     .replace("[", "\\[")
+    .replace("]", "\\]")
     .replace("`", "\\`");
 
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
