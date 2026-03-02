@@ -1,7 +1,7 @@
 #!/opt/bots/kropo/.nvm/versions/node/v24.11.1/bin/ts-node
 
 // ECMAscript/TypeScript
-import { ChatMemberUpdated, ClientUser, Message, TelegramClient } from "telegramsjs";
+import TelegramBot from "node-telegram-bot-api";
 
 const BOT_TOKEN = process.env.KROPO_TOKEN;
 
@@ -9,16 +9,16 @@ if (!BOT_TOKEN) {
   throw new Error("You need to config KROPO_TOKEN with telegram credentials")
 }
 
-let client: TelegramClient;
+let bot: TelegramBot;
 
-const escape = (txt: string) => txt
-    .replace(".", "\\.")
-    .replace("!", "\\!")
-    .replace("_", "\\_")
-    .replace("*", "\\*")
-    .replace("[", "\\[")
-    .replace("]", "\\]")
-    .replace("`", "\\`");
+export const escape = (txt: string) => txt
+    .replace(/\./g, "\\.")
+    .replace(/!/g, "\\!")
+    .replace(/_/g, "\\_")
+    .replace(/\*/g, "\\*")
+    .replace(/\[/g, "\\[")
+    .replace(/\]/g, "\\]")
+    .replace(/`/g, "\\`");
 
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
@@ -75,7 +75,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   }
 ]
 
-const getMessage: (msg: string | string[]) => string = (msg) => {
+export const getMessage: (msg: string | string[]) => string = (msg: string | string[]) => {
   if (typeof msg === 'string') {
     return msg
   } else if (msg instanceof Array) {
@@ -87,28 +87,28 @@ const getMessage: (msg: string | string[]) => string = (msg) => {
   }
 }
 
-const tgInit = async ({ user }: { user: ClientUser | null }) => {
-  if (user) {
-    await user.setCommands([
+const tgInit = async () => {
+  try {
+    await bot.setMyCommands([
       {
         command: "/start",
         description: "Starting command",
       },
     ]);
-    console.log(`Bot @${user.username} is the ready status!`);
-  } else {
-    console.log(`Bot was not available`);
+    const me = await bot.getMe();
+    console.log(`Bot @${me.username} is the ready status!`);
+  } catch (e) {
+    console.error("Error setting commands:", e);
   }
 }
 
-const newMember = async (memberEvent: ChatMemberUpdated) => {
-  if (memberEvent.newMember.status !== "member") return;
-  const newMember= memberEvent.newMember
-  if (!newMember || !newMember.user) {
-    console.error(`Unexpected event format`, memberEvent);
-    return;
-  }
-  const name = newMember.user.username ? `@${newMember.user.username}` : `[${newMember.user.firstName} ${newMember.user.lastName || ''}](tg://user?id=${newMember.user.id})`
+const newMember = async (msg: TelegramBot.Message) => {
+  if (!msg.new_chat_members || msg.new_chat_members.length === 0) return;
+  
+  const newMember = msg.new_chat_members[0];
+  if (!newMember) return;
+  
+  const name = newMember.username ? `@${newMember.username}` : `[${newMember.first_name} ${newMember.last_name || ''}](tg://user?id=${newMember.id})`
   const text = `Bienvenide, ${name}!
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
 Uso pronombres neutros, ¿vos qué pronombres usás?
@@ -116,63 +116,64 @@ Uso pronombres neutros, ¿vos qué pronombres usás?
 Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
 Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`
+  
   try {
-    client.sendMessage({
-      chatId: memberEvent.chat.id,
-      parseMode: "MarkdownV2",
-      text: escape(text)
+    await bot.sendMessage(msg.chat.id, escape(text), {
+      parse_mode: "MarkdownV2"
     })
   } catch (e) {
-    console.error('error intentando saludar a un usuario', e, text, newMember.user)
+    console.error('error intentando saludar a un usuario', e, text, newMember)
   }
 }
 
-const answerMessage = async (eventMessage: Message) => {
-  if (!eventMessage.content || !eventMessage.chat || eventMessage.author?.username === '@kropotkine_bot') {
+const answerMessage = async (msg: TelegramBot.Message) => {
+  if (!msg.text || !msg.chat || msg.from?.username === 'kropotkine_bot') {
     return;
   }
 
   for (let response of automaticResponses) {
-    const res = response.regexp.exec(eventMessage.content)
+    const res = response.regexp.exec(msg.text)
     if (res) {
       let message = getMessage(response.message);
       for (let i = 1; i < res.length; i++) {
         message = message.replace('$'+i, res[i])
       }
       try {
-        client.sendMessage({
-          chatId: eventMessage.chat.id,
-          text: escape(message), // char escaping
-          parseMode: "HTML",
-          replyParameters: {
-            message_id: eventMessage.id
-          }
+        await bot.sendMessage(msg.chat.id, message, {
+          parse_mode: "HTML",
+          reply_to_message_id: msg.message_id
         })
       } catch (e) {
-        console.error('error intentando mandar un mensaje automático', e, message, eventMessage.chat)
+        console.error('error intentando mandar un mensaje automático', e, message, msg.chat)
       }
     }
   }
 }
+
 const start = () => {
   try {
-    client = new TelegramClient(BOT_TOKEN);
+    // Node-telegram-bot-api can use polling or webhook
+    // Using polling for simplicity (same as previous behavior)
+    bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
-    client.on("ready", tgInit);
+    bot.on("polling_error", (err) => {
+      console.error("Telegram polling error:", err);
+    });
 
-    client.on("chatMember", newMember);
+    bot.on("message", (msg) => {
+      // Check if it's a new member event
+      if (msg.new_chat_members && msg.new_chat_members.length > 0) {
+        newMember(msg);
+      } else {
+        // Handle regular messages
+        answerMessage(msg);
+      }
+    });
 
-    client.on("message", answerMessage)
-
-    client.on("error", (err) => {
-      console.error("Telegram client error:", err);
-    })
-
-    client.getUpdates({
-      allowedUpdates: ["chat_member"]
-    })
-
-    client.login()
+    // Initial setup
+    tgInit();
+    
+    console.log("Bot started successfully!");
   } catch (e) {
     console.error(e, 'restarting in 60 seconds')
     setTimeout(start, 60 * 1000)
