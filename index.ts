@@ -1,4 +1,5 @@
 #!/opt/bots/kropo/.nvm/versions/node/v24.11.1/bin/ts-node
+import { getMessage } from './lib';
 
 // ECMAscript/TypeScript
 import TelegramBot from "node-telegram-bot-api";
@@ -10,15 +11,6 @@ if (!BOT_TOKEN) {
 }
 
 let bot: TelegramBot;
-
-export const escape = (txt: string) => txt
-    .replace(/\./g, "\\.")
-    .replace(/!/g, "\\!")
-    .replace(/_/g, "\\_")
-    .replace(/\*/g, "\\*")
-    .replace(/\[/g, "\\[")
-    .replace(/\]/g, "\\]")
-    .replace(/`/g, "\\`");
 
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
@@ -74,18 +66,6 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
   }
 ]
-
-export const getMessage: (msg: string | string[]) => string = (msg: string | string[]) => {
-  if (typeof msg === 'string') {
-    return msg
-  } else if (msg instanceof Array) {
-    const rnd = Math.floor(Math.random() * msg.length)
-    return msg[rnd]
-  } else {
-    console.error("something is off on the message dictonary", msg)
-    return "?"
-  }
-}
 
 const tgInit = async () => {
   try {
@@ -180,4 +160,7 @@ const start = () => {
   }
 }
 
-start()
+// Only run if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  start()
+}
