@@ -109,16 +109,16 @@ const newMember = async (msg: TelegramBot.Message) => {
   if (!newMember) return;
   
   const name = newMember.username ? `@${newMember.username}` : `[${newMember.first_name} ${newMember.last_name || ''}](tg://user?id=${newMember.id})`
-  const text = `Bienvenide, ${name}!
-Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata.
+  const text = `Bienvenide, ${name}\\!
+Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata\\.
 Uso pronombres neutros, ¿vos qué pronombres usás?
 
 Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopirata.com.ar/zines/codigos_para_compartir.html)
 
-Recordamos a todes que este grupo es público, así como su lista de participantes. Cuidemos entre todes qué datos y metadatos compartimos.`
+Recordamos a todes que este grupo es público, así como su lista de participantes\\. Cuidemos entre todes qué datos y metadatos compartimos\\.`
   
   try {
-    await bot.sendMessage(msg.chat.id, escape(text), {
+    await bot.sendMessage(msg.chat.id, text, {
       parse_mode: "MarkdownV2"
     })
   } catch (e) {
