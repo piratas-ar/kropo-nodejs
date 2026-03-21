@@ -98,9 +98,19 @@ Te invitamos a leer nuestros [códigos para compartir](https://utopia.partidopir
 Recordamos a todes que este grupo es público, así como su lista de participantes\\. Cuidemos entre todes qué datos y metadatos compartimos\\.`
   
   try {
-    await bot.sendMessage(msg.chat.id, text, {
-      parse_mode: "MarkdownV2"
-    })
+    // Send typing action
+    await bot.sendChatAction(msg.chat.id, 'typing');
+    
+    // Wait for 3 seconds before sending the message
+    setTimeout(async () => {
+      try {
+        await bot.sendMessage(msg.chat.id, text, {
+          parse_mode: "MarkdownV2"
+        });
+      } catch (e) {
+        console.error('error intentando saludar a un usuario', e, text, newMember);
+      }
+    }, 3000);
   } catch (e) {
     console.error('error intentando saludar a un usuario', e, text, newMember)
   }
@@ -119,10 +129,20 @@ const answerMessage = async (msg: TelegramBot.Message) => {
         message = message.replace('$'+i, res[i])
       }
       try {
-        await bot.sendMessage(msg.chat.id, message, {
-          parse_mode: "HTML",
-          reply_to_message_id: msg.message_id
-        })
+        // Send typing action
+        await bot.sendChatAction(msg.chat.id, 'typing');
+        
+        // Wait for 3 seconds before sending the message
+        setTimeout(async () => {
+          try {
+            await bot.sendMessage(msg.chat.id, message, {
+              parse_mode: "HTML",
+              reply_to_message_id: msg.message_id
+            });
+          } catch (e) {
+            console.error('error intentando mandar un mensaje automático', e, message, msg.chat);
+          }
+        }, 3000);
       } catch (e) {
         console.error('error intentando mandar un mensaje automático', e, message, msg.chat)
       }
