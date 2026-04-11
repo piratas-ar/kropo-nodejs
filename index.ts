@@ -94,7 +94,7 @@ const newMember = async (msg: TelegramBot.Message) => {
 
   const { id, username, first_name, last_name } = newMember;
 
-  const name = username ? `@${newMember.username}` : `[${sanitize(first_name)} ${sanitize(last_name || '')}](tg://user?id=${id})`
+  const name = username ? `@${username.replace('_', '\\_')}` : `[${sanitize(first_name)} ${sanitize(last_name || '')}](tg://user?id=${id})`
   const text = `Bienvenide, ${name}\\!
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata\\.
 Uso pronombres neutros, ¿vos qué pronombres usás?
