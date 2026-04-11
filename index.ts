@@ -12,6 +12,10 @@ if (!BOT_TOKEN) {
 
 let bot: TelegramBot;
 
+const sanitize = (text: string) => {
+  return text.replace(/[\W_]/, ' ')
+}
+
 const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> = [
   {
     regexp: /(?<!no )ha(y|bria|bría) que(?!.+\?)/i,
@@ -87,8 +91,10 @@ const newMember = async (msg: TelegramBot.Message) => {
   
   const newMember = msg.new_chat_members[0];
   if (!newMember) return;
-  
-  const name = newMember.username ? `@${newMember.username}` : `[${newMember.first_name} ${newMember.last_name || ''}](tg://user?id=${newMember.id})`
+
+  const { id, username, first_name, last_name } = newMember;
+
+  const name = username ? `@${newMember.username}` : `[${sanitize(first_name)} ${sanitize(last_name || '')}](tg://user?id=${id})`
   const text = `Bienvenide, ${name}\\!
 Soy Kropotkin, une de les cyborgs del Partido Interdimensional Pirata\\.
 Uso pronombres neutros, ¿vos qué pronombres usás?
