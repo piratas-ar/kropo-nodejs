@@ -59,7 +59,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /(^| )[Qq]uiero ser pir[áa]t[aeo]( |$)/i,
-    message: ["En el fondo, ya lo sos. <3"]
+    message: ["En el fondo, ya lo sos. \<3"]
   },
   {
     regexp: /(^| )Tengo que trabajar( |$)/i,
