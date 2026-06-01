@@ -2,7 +2,7 @@
 import { getMessage } from './lib';
 
 // ECMAscript/TypeScript
-import TelegramBot from "node-telegram-bot-api";
+import TelegramBot, {ChatMemberUpdated} from "node-telegram-bot-api";
 
 const BOT_TOKEN = process.env.KROPO_TOKEN;
 
@@ -86,13 +86,28 @@ const tgInit = async () => {
   }
 }
 
-const newMember = async (msg: TelegramBot.Message) => {
-  if (!msg.new_chat_members || msg.new_chat_members.length === 0) return;
-  
-  const newMember = msg.new_chat_members[0];
-  if (!newMember) return;
+const newMember = async (msg: TelegramBot.Message | TelegramBot.ChatMemberUpdated) => {
+  let newMember: TelegramBot.User
+  if ('new_chat_member' in msg) {
+    const updated = msg as TelegramBot.ChatMemberUpdated
+    if (updated.new_chat_member.status === 'member') {
+      newMember = updated.new_chat_member.user
+    } else {
+      return
+    }
+  } else if ('new_chat_members' in msg) {
+    const message = msg as TelegramBot.Message
+    if (message.new_chat_members && message.new_chat_members.length > 0) {
+      newMember = message.new_chat_members[0]
+    } else {
+      return
+    }
+  } else {
+    return
+  }
 
   const { id, username, first_name, last_name } = newMember;
+  console.log(newMember)
 
   const name = username ? `@${username.replace(/_/g, '\\_')}` : `[${sanitize(first_name)} ${sanitize(last_name || '')}](tg://user?id=${id})`
   const text = `Bienvenide, ${name}\\!
@@ -156,16 +171,31 @@ const answerMessage = async (msg: TelegramBot.Message) => {
   }
 }
 
-const start = () => {
+const start = async () => {
   try {
     // Node-telegram-bot-api can use polling or webhook
     // Using polling for simplicity (same as previous behavior)
-    bot = new TelegramBot(BOT_TOKEN, { polling: true });
+    bot = new TelegramBot(BOT_TOKEN, { polling: { params: { allowed_updates: ['chat_member', 'message'] } } });
+
+    // Sin esto no registra bien los eventos porque la vida es un infierno
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ allowed_updates: ['chat_member', 'message'] }),
+    });
+    await res.json();
 
     bot.on("polling_error", (err) => {
       console.error("Telegram polling error:", err);
     });
 
+    bot.on("chat_member", (msg) => {
+      // Check if it's a new member event
+      if (msg.new_chat_member && msg.new_chat_member.status === 'member') {
+        newMember(msg);
+      }
+    })
     bot.on("message", (msg) => {
       // Check if it's a new member event
       if (msg.new_chat_members && msg.new_chat_members.length > 0) {
