@@ -107,7 +107,6 @@ const newMember = async (msg: TelegramBot.Message | TelegramBot.ChatMemberUpdate
   }
 
   const { id, username, first_name, last_name } = newMember;
-  console.log(newMember)
 
   const name = username ? `@${username.replace(/_/g, '\\_')}` : `[${sanitize(first_name)} ${sanitize(last_name || '')}](tg://user?id=${id})`
   const text = `Bienvenide, ${name}\\!
