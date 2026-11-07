@@ -46,8 +46,12 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
     message: ['¿a quién le habla?', '¿hay unx bot por acá? :O', '¬¬', '¿qué estás haciendo, dave?']
   },
   {
-    regexp: /(^| )Software Libre( |$)/i,
-    message: ["¡Ningún Software es libre hasta que todo Software sea libre!"]
+    regexp: /(^| )[Ss]oftware [Ll]ibre( |$)/i,
+    message: ["¡Ningún Software es libre hasta que todo Software sea libre!", "Puedo instalarle linux a mi computadora, pero el Software Libre se instala en el corazón"]
+  },
+  {
+    regexp: /(^| )Buenas Costumbres|[Pp]lanificaci[oó]n [Ss]ocialista( |$)/i,
+    message: ["Hay que volver a las buenas costumbres... La Buena costumbre de la Planificación Socialista!"] // dicho por Faquis en las charlas de Rosaluc
   },
   {
     regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
