@@ -23,7 +23,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /:[c(]/i,
-    message: [ "te mando un abrazo :(", "te mando un abrazo :c" ]
+    message: [ "te mando un abrazo :(", "te mando un abrazo :c","Cuando estas triste, no estes triste :)", "Si lees esto, te quiero mucho!" ]
   },
   {
     regexp: /windows/i,
@@ -31,11 +31,11 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /( |^)gat(it)?[oiaex]s?( |$)/i,
-    message: "LXS GATITXS SON LO MEJOR"
+    message: ["LXS GATITXS SON LO MEJOR", "¿Un michi?"]
   },
   {
     regexp: /( |^)(yuta|polic[ií]a|rati)( |$)/i,
-    message: ["muerte a la $2", "never yuta"]
+    message: ["muerte a la $2", "never yuta", "que asco la $2"]
   },
   {
     regexp: /( |^)copi(a|ar?)( |$)/i,
@@ -51,7 +51,7 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /(^| )Buenas Costumbres|[Pp]lanificaci[oó]n [Ss]ocialista( |$)/i,
-    message: ["Hay que volver a las buenas costumbres... La Buena costumbre de la Planificación Socialista!"] // dicho por Faquis en las charlas de Rosaluc
+    message: ["Hay que volver a las buenas costumbres... La buena costumbre de la Planificación Socialista!"] // dicho por Faquis en las charlas de Rosaluc
   },
   {
     regexp: /(^| )https:\/\/www.instagram.com\S+\/( |$)/i,
@@ -59,19 +59,27 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /(^| )([Aa]rgentin[oae]|[Ll]at[ií]n[oa]|[Ss]udam[ée]rica|[Ss]udam[ée]rican[aeo])( |$)/i,
-    message: ["¡Cuanto menos yanqui y europeo, mejor!"]
+    message: ["¡Cuanto menos yanqui y europeo, mejor!", "Yo no confío en ningún europeo."]
   },
   {
     regexp: /(^| )[Qq]uiero ser pir[áa]t[aeo]( |$)/i,
     message: ["En el fondo, ya lo sos. \<3"]
   },
   {
-    regexp: /(^| )Tengo que trabajar( |$)/i,
+    regexp: /(^| )[Tt]engo que trabajar( |$)/i,
     message: ["¡Quiero estar haciendo cosas lindas todo el dia! ¿Quién mierda inventó trabajar?"]
   },
     {
-    regexp: /(^| )torrent( |$)/i,
+    regexp: /(^| )[Tt]orrent( |$)/i,
     message: ["compartir es bueno", "copiar no es robar", "torrent o patria","si no torrenteamos, la cultura se netflixea", "no descargarías el pan"]
+  },
+  {
+    regexp: /(^| )[Oo]sm[Aa]nd( |$)/i,
+    message: ["Somos mi mapa OsMand y yo contra el mundo"]  // Inspirado en algo que una vez dijo Ram,
+  },
+  {
+    regexp: /(^| )[Pp]lay [Ss]tore( |$)/i,
+    message: ["Escribiste mal F-droid", "https://keepandroidopen.org/es/"] 
   }
 ]
 
