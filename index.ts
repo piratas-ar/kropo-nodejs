@@ -39,11 +39,19 @@ const automaticResponses: Array<{ regexp: RegExp, message: string | string[]}> =
   },
   {
     regexp: /( |^)copi(a|ar?)( |$)/i,
-    message: "¡copiar no es robar!"
+    message: ["¡copiar no es robar!","copia lo bello, copia lo bueno"]
   },
   {
     regexp: /( |^)bot( |$)/i,
-    message: ['¿a quién le habla?', '¿hay unx bot por acá? :O', '¬¬', '¿qué estás haciendo, dave?']
+    message: ['¿a quién le habla?','Escribiste mal: Cyborg', '¿hay unx bot por acá? :O', '¬¬', '¿qué estás haciendo, dave?']
+  },
+  {
+    regexp: /(^| )[Nn]o quiero trabajar|[Aa]utomatizar|[Aa]utomaticemos( |$)/i,
+    message: ["¡Automatización de la producción bajo control obrero!", "Por eso la clase obrera necesita un machín Lenin"] //feat: Faqiuis
+  },
+  {
+    regexp: /(^| )[Cc]lase [Oo]brera( |$)/i,
+    message: ["¡Lo que la clase obrera necesita es un machín Lenin"] //feat: Faqiuis
   },
   {
     regexp: /(^| )[Ss]oftware [Ll]ibre( |$)/i,
